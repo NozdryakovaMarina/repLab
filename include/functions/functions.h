@@ -19,19 +19,20 @@ namespace figure{
 		
 		Type _type;
 		double _x;
+		double _x0;
 		double _y;
+		double _y0;
 		double _z;
+		double _z0;
 		
-		Figure(Type type, double x, double y, double z);
+		Figure(Type type, double x, double x0, double y, double y0, double z, double z0);
 		
 		public:
 		
 		/*double GetRadius() const;
-		double GetHeight() const;
-		double compute_area() const;
-		double compute_volume() const;*/
+		double GetHeight() const;*/
 		
-		static Figure create_shpere(double x, double y, double z);
+		static Figure create_shpere(double x0, double x, double y0, double y, double z0, double z);
 		static Figure create_cylinder(double x, double y, double z);
 		static Figure creare_parallelepiped(double x, double y, double z);
 		
@@ -42,7 +43,8 @@ namespace figure{
 		double GetY() const;
 		double GetZ() const;
 		
-	
+	    Figure compute_area() const;
+		Figure compute_volume() const;
 	};
 	
   
@@ -59,10 +61,11 @@ namespace figure{
 		     Storage();
 			 
 			 int size() const;
+	operator[](int index) const;
 			 
 	 };
 	 
-	 int index_of_max_
+	 int index_of_max_volume(const Storage& storage, );
 	 
 }
 		
