@@ -1,37 +1,42 @@
 #pragma once
 
-namespace figure{
+namespace figure {
 	
 	const double PI = 3,141592;
 	
-	enum class Type{
+	enum class Type {
 		
 		Sphere,
-		
 		Cylinder,
-		
 		Parallelepiped
 	};
 	
-	class Figure{
+	class Coordinate {
 		
-		private:
+		double x, y, z;
 		
-		Type _type;
-		double _x;
-		double _x0;
-		double _y;
-		double _y0;
-		double _z;
-		double _z0;
+		public:
+		Coordinate();
+		Coordinate(double x, double y, double z);
+		double getX();
+		double getY();
+		double getZ();
+		void setX(double x);
+		void setY(double y);
+		void setZ(double z);
 		
-		Figure(Type type, double x, double x0, double y, double y0, double z, double z0);
+	
+	class Figure {
+		
+		TypeFigure type;
+		Coordinate pos[6];
 		
 		public:
 		
-		/*double GetRadius() const;
-		double GetHeight() const;*/
+		Figure();
+		Figure(TypeFigure type, Coordinate pos[6]);
 		
+		TypeFigure getTypeFigure();
 		static Figure create_shpere(double x0, double x, double y0, double y, double z0, double z);
 		static Figure create_cylinder(double x, double y, double z);
 		static Figure creare_parallelepiped(double x, double y, double z);
