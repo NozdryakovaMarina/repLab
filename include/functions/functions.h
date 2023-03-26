@@ -2,9 +2,7 @@
 
 namespace figure {
 	
-	const double PI = 3,141592;
-	
-	enum class Type {
+	enum class TypeFigure {
 		
 		Sphere,
 		Cylinder,
@@ -24,7 +22,7 @@ namespace figure {
 		void setX(double x);
 		void setY(double y);
 		void setZ(double z);
-		
+	};		
 	
 	class Figure {
 		
@@ -37,48 +35,37 @@ namespace figure {
 		Figure(TypeFigure type, Coordinate pos[6]);
 		
 		TypeFigure getTypeFigure();
-		static Figure create_shpere(double x0, double x, double y0, double y, double z0, double z);
-		static Figure create_cylinder(double x, double y, double z);
-		static Figure creare_parallelepiped(double x, double y, double z);
+		Coordinate getCoordinateIndex(int i);
+		void setTypeFigure(TypeFigure type);
+		void setCoordinateIndex(int i, Coordinate coordinate);
+
 		
-		Figure();
-		
- 		Type GetType() const;
-		double GetX() const;
-		double GetY() const;
-		double GetZ() const;
-		
-	    Figure compute_area() const;
-		Figure compute_volume() const;
+	    double compute_area();
+		double compute_volume();
 	};
 	
   
      class Storage{
-		 public:
-		     static const int CAPACITY = 10;
-			 
 		private:
-		     Figure _storage[CAPACITY];
-			 
-		     int _size;
+		     static const int CAPACITY = 10;
+		     Figure figure[CAPACITY];
+		     int size;
 			 
 		public:
 		     Storage();
+			 Storage(Figure figures[], int size);
 			 
-			 int size() const;
-	operator[](int index) const;
+			 Figure getFigureIndex(int i);
+			 void setSize(int size);
+			 int getSize();
+	         Figure operator[](int index) const;
+			 Figure& operator[](int index);
+			 void attItem(int index, Figure fig);
+			 void delItem(int index);
+			 void rid();
+			 int IndexOfMaxVolume(Figure Figures[]); 
 			 
 	 };
 	 
-	 int index_of_max_volume(const Storage& storage, );
-	 
 }
 		
-		
-	
-/*int sum_stub(int lhs, int rhs);
-        void SetX(int x) {_x=x;}
-		void SetY(int y) {_y=y;}
-		void SetZ(int z) {_z=z;}
-		
-*/
