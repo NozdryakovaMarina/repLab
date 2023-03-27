@@ -1,29 +1,14 @@
 #include <gtest/gtest.h>
-
+#define CAPACITY 10
 #include <functions/functions.h>
 
 using namespace figure;
 
-/*TEST(FunctionsTests, SumStubTest1) {
-    // Arrange
-    int lhs = 2;
-    int rhs = 3;
-    
-    // Act
-    int r = sum_stub(lhs, rhs);
-    
-    // Assert
-    EXPECT_EQ(r, 5);
+//1
+TEST(FigureTests, FigureTypeDefConstructorTest)
+{
+	Figure fig = Figure();
+	EXPECT_EQ(fig.getTypeFigure(), Cylinder);
 }
 
-TEST(FunctionsTests, SumStubTest2) {
-    // Arrange
-    int lhs = -1;
-    int rhs = 3;
-    
-    // Act
-    int r = sum_stub(lhs, rhs);
-    
-    // Assert
-    EXPECT_EQ(r, 2);
-}*/
+ 

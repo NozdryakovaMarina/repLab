@@ -7,141 +7,68 @@
 
 using namespace figure;
 using namespace std;
-
-struct Index
-{
-	int index_max_x=0;
-	int index_max_y=0;
-	int index_max_z=0;
-	int index_min_x=0;
-	int index_min_y=0;
-	int index_min_z=0;
-};
-
-Index comp_extreme_vol(Figure* fig)
-{
-     Index value;
-     for(int i = 1; i < 6; ++i)
-	 {
-         if(fig_get_coordinate(i).getX() > fig_get_coordinate(value.index_max_x).getX())
-		 {
-             value.index_max_x = i;
-		 }
-         if(fig_get_coordinate(i).getY() > fig_get_coordinate(value.index_max_y).getY())
-		 {
-             value.index_max_y = i;
-		 }
-         if(fig_get_coordinate(i).getZ() > fig_get_coordinate(value.index_max_z).getZ())
-		 {
-             value.index_max_z = i;
-		 }
-         if(fig_get_coordinate(i).getX() < fig_get_coordinate(value.index_min_x).getX())
-		 {
-             value.index_min_x = i;
-		 }
-         if(fig_get_coordinate(i).getY() < fig_get_coordinate(value.index_min_y).getY())
-		 {
-             value.index_min_y = i;
-		 }
-         if(fig_get_coordinate(i).getY() < fig_get_coordinate(value.index_min_z).getZ())
-		 {
-             value.index_min_z = i;
-		 }
-	 }
-     return value;
-}
-
-Coordinate::Coordinate() : x(0), y(0), z(0) {};	 
+ 
 
 TypeFigure Figure::getTypeFigure() { return type; }
+
+void Figure::setTypeFigure(TypeFigure type) {this->type = type;}
+
 	
-double Coordinate::getX() { return x; }
+double Figure::get_x1() {return x1;}
+
+double Figure::get_x0() {return x0;}
 	
-double Coordinate::getY() { return y; }
+double Figure::get_y1() {return y1;}
+
+double Figure::get_y0() {return y0;}
 	
-double Coordinate::getZ() { return z; }
-	
-	
-/*Figure Figure::compute_volume() {
+double Figure::get_z1() {return z1;}
+
+double Figure::get_z0() {return z0;}
+
+
+Figure Figure::compute_volume() {
 	switch (_type) {
 		case Type::Sphere:
-		     return (4*PI*pow(R,3))/3;
+		double x = fabs(x1 - x0);
+		double y = fabs(y1 - y0);
+		double z = fabs(z1 - z0);
+		r = sqrt(x*x + y*y + z*z);
+		     return (4*PI*r*r*r)/3;
 		case Type::Cylinder:
-		     return PI*h*pow(r,2);
+		double x = x1 - x0;
+		double y = y1 - y0;
+		double z = z1 - z0;
+		h = sqrt(x*x + y*y + z*z);
+		     return PI*h*r*r;
 		case Type::Parallelepiped:
+		double a = fabs(x1 - x0);
+		double b = fabs(y1 - y2);
+		double c = fabs(z1 - z0);
 		     return a*b*c;
 	     default:
-	         throw runtime_error("[Figure::compute_area] Invalid function type.");
+	         throw runtime_error("Invalid function type.");
 	}
 }
 
-Figure Figure::compute_area() const {
+Figure Figure::compute_area() { 
 	switch (_type) {
 		case Type::Sphere:
-		     return 4*PI*pow(R,2);
+		double x = x1 - x0;
+		double y = y1 - y0;
+		double z = z1 - z0);
+		r = sqrt(x*x + y*y + z*z);
+		     return 4*PI*r*r;
 	    case Type::Cylinder:
+		
 		     return 2*PI*r(r+h);
 		case Type::Parallelepiped:
+		double a = fabs(x1 - x0);
+		double b = fabs(y1 - y0);
+		double c = fabs(z1 - z0);
 		     return 2*(a*b+b*c+a*c);
 		default:
-		    throw runtime_error("[Figure::compute_volume] Invalid function type.");
+		    throw runtime_error("Invalid function type.");
 	}
-}*/
-Figure Storage::getFigureIndex(int i) {return figure[i];}
-int Storage::getSize() {return size;}
-void Storage::setSize(int size) {this->size = size;}
-
-Figure Storage::operator[](int index) const
-{
-	if (index < 0 || size <= index) 
-	{
-		throw runtime_error("Index is out of range.");
-	}
-	
-	return figure[index];
 }
 
-void Storage::attItem(int index, Figure fig) 
-{
-	if(size == CAPACITY) 
-	{
-		throw runtime_error("Capacity is reached.");
-	}
-	if(index < 0 || index >= size)
-	{
-	throw runtime_error("Index is out of range.");
-	}
-	
-	for(int i = size-1; i >= index; --i) {figure[i] = figure[i-1];}
-	figure[index] = fig;
-	++size;
-}
-
-void Storage::rid() {size=0;}
-
-void Storage::delItem(int index)
-{
-	if(size<=0)
-	{
-		throw runtime_error("Storage is empty.");
-	}
-	for(int i = index; i < size - 1; ++i) {figure[i] = figure[i+1];}
-	--size;
-}
-
-
-int Storage::IndexOfMaxVolume(Figure figures[]) 
-{
-	int index = 0;
-	double maxVolume = figures[0].compute_volume();
-	for(int i=0; i<size-1; ++i) 
-	{
-		double curVolume = figures[i].compute_volume();
-		if (curVolume > maxVolume) {
-			index = i;
-			maxVolume = curVolume;
-		}
-	}
-	
-	return index;
-}

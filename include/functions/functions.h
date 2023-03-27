@@ -9,37 +9,26 @@ namespace figure {
 		Parallelepiped
 	};
 	
-	class Coordinate {
-		
-		double x, y, z;
-		
-		public:
-		Coordinate();
-		Coordinate(double x, double y, double z);
-		double getX();
-		double getY();
-		double getZ();
-		void setX(double x);
-		void setY(double y);
-		void setZ(double z);
-	};		
-	
 	class Figure {
 		
 		TypeFigure type;
-		Coordinate pos[6];
+         double x1, y1, z1;
+		 double x0, y0, z0;
 		
 		public:
 		
 		Figure();
-		Figure(TypeFigure type, Coordinate pos[6]);
+		Figure(TypeFigure type, double x1, y1, z1, double x0, y0, z0);
 		
 		TypeFigure getTypeFigure();
-		Coordinate getCoordinateIndex(int i);
-		void setTypeFigure(TypeFigure type);
-		void setCoordinateIndex(int i, Coordinate coordinate);
-
 		
+		double get_x1();
+		double get_x0();
+		double get_y1();
+		double get_y0();
+		double get_z1();
+		double get_z0();
+
 	    double compute_area();
 		double compute_volume();
 	};
@@ -60,8 +49,8 @@ namespace figure {
 			 int getSize();
 	         Figure operator[](int index) const;
 			 Figure& operator[](int index);
-			 void attItem(int index, Figure fig);
-			 void delItem(int index);
+			 void att(int index, Figure fig);
+			 void del(int index);
 			 void rid();
 			 int IndexOfMaxVolume(Figure Figures[]); 
 			 
