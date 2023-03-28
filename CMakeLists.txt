@@ -18,7 +18,7 @@ if(MSVC)
 endif()
 
 # Объявляем библиотеку
-add_library(functions SHARED "include/functions/functions.h" "src/functions.cc")
+add_library(functions SHARED "include/functions/functions.h" "src/functions.cc" "src/storage.cc")
 target_include_directories(functions PUBLIC "include")
 
 # Подключаем googletest

@@ -7,7 +7,7 @@ using namespace figure;
 //1
 TEST(FigureTests, FigureTypeDefConstructorTest)
 {
-	Figure fig = Figure();
+	Figure f = Figure();
 	EXPECT_EQ(fig.getTypeFigure(), Cylinder);
 }
 

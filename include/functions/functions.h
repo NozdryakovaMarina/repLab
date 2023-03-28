@@ -13,24 +13,32 @@ namespace figure {
 		
 		TypeFigure type;
          double x1, y1, z1;
-		 double x0, y0, z0;
+		 double x3, y3, z3;
+		 double x2, y2, z2;
 		
 		public:
 		
 		Figure();
-		Figure(TypeFigure type, double x1, y1, z1, double x0, y0, z0);
+		Figure(TypeFigure type, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3);
 		
-		TypeFigure getTypeFigure();
+		static Figure create_sphere(double x1, double y1, double z1, double x2, double y2, double z2);
+		static Figure create_cylinder(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3);
+		static Figure create_parallelepiped(double x1, double y1, double z1, double x2, double y2, double z2);
 		
-		double get_x1();
-		double get_x0();
-		double get_y1();
-		double get_y0();
-		double get_z1();
-		double get_z0();
+		TypeFigure getTypeFigure() const;
+		
+		double get_x1() const;
+		double get_x3() const;
+		double get_x2() const;
+		double get_y1() const;
+		double get_y3() const;
+		double get_y2() const;
+		double get_z1() const;
+		double get_z3() const;
+		double get_z2() const;
 
-	    double compute_area();
-		double compute_volume();
+	    double compute_area() const;
+		double compute_volume() const;
 	};
 	
   
@@ -38,20 +46,19 @@ namespace figure {
 		private:
 		     static const int CAPACITY = 10;
 		     Figure figure[CAPACITY];
-		     int size;
+		     int _size;
 			 
 		public:
 		     Storage();
 			 Storage(Figure figures[], int size);
 			 
 			 Figure getFigureIndex(int i);
-			 void setSize(int size);
-			 int getSize();
+			 int size() const;
 	         Figure operator[](int index) const;
-			 Figure& operator[](int index);
-			 void att(int index, Figure fig);
-			 void del(int index);
-			 void rid();
+			 void add_item(int index, Figure f);
+			 void del_item(int index);
+			 void insert(int index, Figure f);
+			 void remove(int index);
 			 int IndexOfMaxVolume(Figure Figures[]); 
 			 
 	 };

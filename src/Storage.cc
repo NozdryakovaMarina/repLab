@@ -5,15 +5,15 @@ using namespace figure;
 using namespace std;
 
 
-Storage::Storage() : size(0) {}
+Storage::Storage() : _size(0) {}
 
 int Storage::size() const{
-	return size;
+	return get_size;
 } 
 
 Figure Storage::operator[](int index) const
 {
-	if (index < 0 || size <= index) 
+	if (index < 0 || _size <= index) 
 	{
 		throw runtime_error("Index is out of range.");
 	}
@@ -21,16 +21,7 @@ Figure Storage::operator[](int index) const
 	return figure[index];
 }
 
-Figure& Storage::operator[](int index)
-{
-	if(index < 0 || index >= size)
-	{
-		throw runtime_error("Index is out of rounge.");
-	}
-	return figure[index];
-}
-
-void Storage::att(int index, Figure fig) 
+void Storage::add(int index, Figure f) 
 {
 	if(size == CAPACITY) 
 	{
@@ -42,11 +33,11 @@ void Storage::att(int index, Figure fig)
 	}
 	
 	for(int i = size-1; i >= index; --i) {figure[i] = figure[i-1];}
-	figure[index] = fig;
+	figure[index] = f;
 	++size;
 }
 
-void Storage::rid() {size=0;}
+void Storage::remove() { size=0; }
 
 void Storage::del(int index)
 {
