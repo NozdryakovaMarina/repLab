@@ -45,21 +45,20 @@ namespace figure {
      class Storage{
 		private:
 		     static const int CAPACITY = 10;
-		     Figure figure[CAPACITY];
+		     Figure figures[CAPACITY];
 		     int _size;
 			 
 		public:
 		     Storage();
 			 Storage(Figure figures[], int size);
 			 
-			 Figure getFigureIndex(int i);
 			 int size() const;
 	         Figure operator[](int index) const;
-			 void add_item(int index, Figure f);
+			 void add_item(const Figure f);
 			 void del_item(int index);
-			 void insert(int index, Figure f);
+			 void insert_figure(Figure figure1, int index);
 			 void remove(int index);
-			 int IndexOfMaxVolume(Figure Figures[]); 
+			 int IndexOfMaxVolume(const Storage& figures); 
 			 
 	 };
 	 

@@ -8,60 +8,71 @@ using namespace std;
 Storage::Storage() : _size(0) {}
 
 int Storage::size() const{
-	return get_size;
+	return _size;
 } 
 
 Figure Storage::operator[](int index) const
 {
 	if (index < 0 || _size <= index) 
 	{
-		throw runtime_error("Index is out of range.");
+		throw out_of_range("[Storage::operator[]]Index is out of range.");
 	}
 
-	return figure[index];
+	return _figures[index];
 }
 
-void Storage::add(int index, Figure f) 
+void Storage::add_item(const Figure f) 
 {
 	if(size == CAPACITY) 
 	{
-		throw runtime_error("Capacity is reached.");
+		throw runtime_error("[Storage::add]Capacity is reached.");
 	}
-	if(index < 0 || index >= size)
-	{
-	throw runtime_error("Index is out of range.");
-	}
-	
-	for(int i = size-1; i >= index; --i) {figure[i] = figure[i-1];}
-	figure[index] = f;
-	++size;
+	figures[index] = f;
+	++_size;
 }
 
-void Storage::remove() { size=0; }
-
-void Storage::del(int index)
+void Storage::insert_figure(Figure figure1, int index)
 {
-	if(size<=0)
+	if (index < 0  _size <= index) {
+        throw out_of_range("[Storage::operator[]] Index is out of range. ");
+    }
+    else {
+        for (int i = _size - 1; i != index; i--) {
+            _figures[i + 1] = _figures[i];
+        }
+    }
+    _figures[index] = figure1;
+    _size++;
+}
+
+void Storage::remove(int index) { _size=0; }
+
+void Storage::del_item(int index)
+{
+	if(int i = index; i != CAPACITY - 1; ++i)
 	{
-		throw runtime_error("Storage is empty.");
+		throw out_of_range("[Storage::operator[]]Index is out of range.");
 	}
-	for(int i = index; i < size - 1; ++i) {figure[i] = figure[i+1];}
-	--size;
+	{
+		Figure figure1;
+	    for(int i = index; i != CAPACITY-1 ; ++i) {_figures[i] = _figures[i+1];}
+    }
+	_size--;
 }
 
 
-int Storage::IndexOfMaxVolume(Figure figures[]) 
+int Storage::IndexOfMaxVolume(const Storage& _figures) 
 {
-	int index = 0;
-	double maxVolume = figures[0].compute_volume();
-	for(int i=0; i<size-1; ++i) 
-	{
-		double curVolume = figures[i].compute_volume();
-		if (curVolume > maxVolume) {
-			index = i;
-			maxVolume = curVolume;
+	int max_index = -1;
+	double maxVolume = 0;
+	const auto n = _figures.size();
+	for(int i=0; i < n; ++i) 
+	{   const auto volume = _figures[i].compute_volume();
+		if (max_index == -1 || max_volume < volume) {
+			max_index = i;
+			max_volume = volume;
 		}
 	}
 	
-	return index;
+	return max_index;
 }
