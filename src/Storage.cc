@@ -1,4 +1,5 @@
-#include <function/function.h>
+#include <functions/functions.h>
+
 #include <stdexcept>
 
 using namespace figure;
@@ -21,19 +22,19 @@ Figure Storage::operator[](int index) const
 	return _figures[index];
 }
 
-void Storage::add_item(const Figure f) 
+void Storage::add(const Figure f) 
 {
-	if(size == CAPACITY) 
+	if(_size == CAPACITY) 
 	{
 		throw runtime_error("[Storage::add]Capacity is reached.");
 	}
-	figures[index] = f;
+	_figures[_size] = f;
 	++_size;
 }
 
 void Storage::insert_figure(Figure figure1, int index)
 {
-	if (index < 0  _size <= index) {
+	if (index < 0 || _size <= index) {
         throw out_of_range("[Storage::operator[]] Index is out of range. ");
     }
     else {
@@ -49,7 +50,7 @@ void Storage::remove(int index) { _size=0; }
 
 void Storage::del_item(int index)
 {
-	if(int i = index; i != CAPACITY - 1; ++i)
+	if(index < 0 || _size <= index)
 	{
 		throw out_of_range("[Storage::operator[]]Index is out of range.");
 	}
@@ -61,16 +62,16 @@ void Storage::del_item(int index)
 }
 
 
-int Storage::IndexOfMaxVolume(const Storage& _figures) 
+int figure::IndexOfMaxVolume(const Storage& _figures) 
 {
 	int max_index = -1;
 	double maxVolume = 0;
 	const auto n = _figures.size();
 	for(int i=0; i < n; ++i) 
 	{   const auto volume = _figures[i].compute_volume();
-		if (max_index == -1 || max_volume < volume) {
+		if (max_index == -1 || maxVolume < volume) {
 			max_index = i;
-			max_volume = volume;
+			maxVolume = volume;
 		}
 	}
 	
