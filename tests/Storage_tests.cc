@@ -50,5 +50,5 @@ TEST(StorageTests,IndexOfMaxVolume)
 	_figures.add(Figure::create_sphere(0,-1,2,4,-1,2));
 	_figures.add(Figure::create_cylinder(5,4,0,5,4,6,5,1,6));
 	_figures.add(Figure::create_parallelepiped(1,2,-4,3,0,2));
-	EXPECT_EQ(IndexOfMaxVolume(_figures),1);
+	EXPECT_EQ(IndexOfMaxVolume(_figures),0);
 }

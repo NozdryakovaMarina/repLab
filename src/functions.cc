@@ -2,7 +2,7 @@
 #include <cassert>
 #include <cmath>
 #include <stdexcept>
-#define PI 3.14159265
+#define PI 3.14
 
 using namespace figure;
 using namespace std;
@@ -62,10 +62,17 @@ double Figure::calc_of_volume_cylinder()
 	double z = _z2 - _z1;
 	double h = sqrt(x*x + y*y + z*z);
 	double x0 = _x3 - _x2;
-	double y0 = _x3 - _x2;
+	double y0 = _y3 - _y2;
 	double z0 = _z3 - _z2;
 	double r = sqrt(x0*x0 + y0*y0 + z0*z0);
-	return PI*h*r*r;
+	double x1 = _x3 - _x1;
+	double y1 = _y3 - _y1;
+	double z1 = _z3 - _z1;
+	if ((h * h + r * r) == x1 * x1 + y1 * y1 + z1 * z1)
+		return PI * h * r * r;
+	else {
+		throw runtime_error("[Figure::calc_of_area_cylinder]Invalid settings of cylinder");
+	}
 }
 
 double Figure::calc_of_volume_parallelepiped()
@@ -110,10 +117,17 @@ double Figure::calc_of_area_cylinder()
 	double z = _z2 - _z1;
 	double h = sqrt(x*x + y*y + z*z);
 	double x0 = _x3 - _x2;
-	double y0 = _x3 - _x2;
+	double y0 = _y3 - _y2;
 	double z0 = _z3 - _z2;
 	double r = sqrt(x0*x0 + y0*y0 + z0*z0);
-	return 2*PI*r*(r+h);
+	double x1 = _x3 - _x1;
+	double y1 = _y3 - _y1;
+	double z1 = _z3 - _z1;
+	if ((h*h + r*r) == x1*x1 + y1*y1 + z1*z1)
+		return 2*PI*r*(r+h);
+	else {
+		throw runtime_error("[Figure::calc_of_area_cylinder]Invalid settings of cylinder");
+	}
 }
 
 double Figure::calc_of_area_parallelepiped()
