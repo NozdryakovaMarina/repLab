@@ -23,11 +23,15 @@ target_include_directories(functions PUBLIC "include")
 
 # Подключаем googletest
 include(FetchContent)
-FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/6b63c98ac43efc992122f1da12aaf0a0e0658206.zip)
+FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/6b63c98ac43efc992122f1da12aaf0a0e0658206.zip) 
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # Объявляем тесты
 add_executable(functions_tests "tests/functions_tests.cc" "tests/Storage_tests.cc")
 target_link_libraries(functions_tests functions GTest::gtest_main)
+
+# Объявляем исполняемый файл
+add_executable(consoleFigure  "Console/consoleFigure.cc")
+target_link_libraries(consoleFigure functions)
 

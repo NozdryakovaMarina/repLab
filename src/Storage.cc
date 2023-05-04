@@ -6,74 +6,138 @@ using namespace figure;
 using namespace std;
 
 
-Storage::Storage() : _size(0) {}
+Storage::Storage() :
+    _figures(nullptr),
+    _size(0) {}
 
-int Storage::size() const{
-	return _size;
-} 
-
-Figure Storage::operator[](int index) const
-{
-	if (index < 0 || _size <= index) 
-	{
-		throw out_of_range("[Storage::operator[]]Index is out of range.");
-	}
-
-	return _figures[index];
+int Storage::get_size() const {
+    return _size;
 }
 
-void Storage::add(const Figure f) 
-{
-	if(_size == CAPACITY) 
-	{
-		throw runtime_error("[Storage::add]Capacity is reached.");
-	}
-	_figures[_size] = f;
-	++_size;
+Storage::~Storage() {
+    for (int i = 0; i < _size; i++) {
+        delete _figures[i];
+    }
+    delete[] _figures;;
 }
 
-void Storage::insert_figure(Figure figure1, int index)
+void Storage::swap(Storage& other) {
+    std::swap(_size, other._size);
+    std::swap(_figures, other._figures);
+}
+
+Storage::Storage(const Storage& other) :
+    _figures(new Figure* [other._size]),
+    _size(other._size)
 {
-	if (index < 0 || _size <= index) {
-        throw out_of_range("[Storage::operator[]] Index is out of range. ");
+    for (int i = 0; i < _size; ++i) {
+        _figures[i] = other[i]->clone();
     }
-    else {
-        for (int i = _size - 1; i != index; i--) {
-            _figures[i + 1] = _figures[i];
-        }
+}
+
+Storage& Storage::operator=(Storage& other)
+{
+    Storage new_figure(other);
+    swap(other);
+    return *this;
+}
+
+Figure* Storage::operator[](const int index) const
+{
+    if (index < 0 || _size <= index) {
+        throw out_of_range("[FigureList::operator[]] Index is out of range. ");
     }
-    _figures[index] = figure1;
+    return _figures[index];
+}
+
+Figure* Storage::get_figure_by_index(int index)
+{
+    if (index < 0 || _size <= index)
+        throw 0;
+    return _figures[index];
+}
+
+void Storage::add(Figure* const f)
+{
+    auto new_figure = new Figure * [_size + 1];
+    for (int i = 0; i < _size; ++i) {
+        new_figure[i] = _figures[i];
+    }
+    new_figure[_size] = f;
+    delete[] _figures;
+    _figures = new_figure;
+    ++_size;
+}
+
+void Storage::insert_figure(Figure* figure, int index)
+{
+    if (index < 0 || _size < index) {
+        throw out_of_range("[FigureList::operator[]] Index is out of range. ");
+    }
+    auto new_figure = new Figure * [_size + 1];
+    for (int i = 0; i < _size; i++) {
+        if (i < index) new_figure[i] = _figures[i];
+        else new_figure[i + 1] = _figures[i];
+    }
+    new_figure[index] = figure;
+    delete[] _figures;
+    _figures = new_figure;
     _size++;
 }
 
-void Storage::remove(int index) { _size=0; }
+void Storage::install_figure(Figure* figure, int index)
+{
+    if (index < 0 || index > _size) {
+        throw out_of_range("[FigureList::operator[]] Index is out of range. ");
+    }
+    else {
+        _figures[index] = figure;
+    }
+}
+
+void Storage::remove(int index)
+{
+    if (index < 0 || _size <= index)
+        throw runtime_error("[FigureList::remove] FigureList is empty");
+    delete _figures[index];
+    for (int i = index; i < _size - 1; i++)
+        _figures[i] = _figures[i + 1];
+    --_size;
+}
 
 void Storage::del_item(int index)
 {
-	if(index < 0 || _size <= index)
-	{
-		throw out_of_range("[Storage::operator[]]Index is out of range.");
-	}
-	{
-		Figure figure1;
-	    for(int i = index; i != CAPACITY-1 ; ++i) {_figures[i] = _figures[i+1];}
+    if (index < 0 || _size < index) {
+        throw out_of_range("[FigureList::operator[]] Index is out of range. ");
     }
-	_size--;
+    auto new_figure = new Figure * [_size - 1];
+    for (int i = 0; i < _size; ++i) {
+        if (index > i) new_figure[i] = _figures[i];
+        else new_figure[i] = _figures[i + 1];
+    }
+    delete[] _figures;
+    _figures = new_figure;
+    _size--;
 }
 
-
-int figure::IndexOfMaxVolume(const Storage& _figures) 
+Figure Storage::IndexOfMaxVolume()
 {
-	int max_index = -1;
-	double maxVolume = 0;
-	const auto n = _figures.size();
-	for(int i=0; i < n; ++i) 
-	{   const auto volume = _figures[i].compute_volume();
-		if (max_index == -1 || maxVolume < volume) {
-			max_index = i;
-			maxVolume = volume;
-		}
-	}
-	
-	return max_index;
+    if (_size <= 0)
+        throw 0;
+    Figure max_figure(*_figures[0]);
+    for (int i = 0; i < _size; i++) {
+        if (max_figure.compute_volume() < (*_figures[i]).compute_volume())
+            max_figure = *_figures[i];
+    }
+   /*int max_index = 0;
+    double maxVolume = _figures[0]->compute_volume();
+    for (int i = 1; i < _size; i++) {
+        double volume = _figures[i]->compute_volume();
+        if (volume > maxVolume) {
+            max_index = i;
+            maxVolume = volume;
+        }
+    }*/
+   
+    return max_figure;
 }

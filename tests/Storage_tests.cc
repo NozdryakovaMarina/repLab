@@ -5,50 +5,113 @@ using namespace figure;
 
 
 //1
-TEST(StorageTests, CapacityCheck)
+TEST(StorageTests, StorageSizeTest)
 {
-	Storage _figures;
-	Figure figure_1 = Figure::create_sphere(0,0,0,0,0,13);
-	for(int i = 0; i < Storage::CAPACITY; ++i)
-	{
-		_figures.add(figure_1);
-	}
-	ASSERT_ANY_THROW(_figures.add(figure_1));
+	Storage fig = Storage();
+	EXPECT_EQ(fig.get_size(), 0);
 }
 
 //2
 TEST(StorageTests, del_item)
 {
-	Storage _figures;
-	Figure figure_1 = Figure::create_cylinder(0,-1,2,9,-1,2,0,-1,-2);
-	Figure figure_2 = Figure::create_sphere(0,-1,2,4,-1,2);
-	_figures.add(figure_1);
-	_figures.add(figure_2);
-	_figures.del_item(0);
-	TypeFigure t = _figures[0].getTypeFigure();
+	Storage figures;
+	Figure figure;
+	Point point1_1 = { 9,-1,2 };
+	Point point1_2 = { 0,-1,2 };
+	Point point1_3 = { 0,-1,-2 };
+	Point points1[3] = { point1_1, point1_2, point1_3 };
+	Point point2_1 = { 0,-1,2 };
+	Point point2_2 = { 4,-1,2 };
+	Point points2[2] = {point2_1, point2_2};
+	figures.add(figure.create_cylinder(points1));
+	figures.add(figure.create_sphere(points2));
+	figures.del_item(0);
+	int x = 0;
+	if (*figures.get_figure_by_index(0) == *figure.create_sphere(points2)) ++x;
+	EXPECT_EQ(x, 1);
+}
+
+//2
+TEST(StorageTests, InsertTest)
+{
+	Storage figures;
+	Figure figure;
+	Point point1_1 = { 0,0,0 };
+	Point point1_2 = { 0,0,13 };
+	Point points1[2] = {point1_1, point1_2};
+	Point point2_1 = { 9,-1,2 };
+	Point point2_2 = { 0,-1,2 };
+	Point point2_3 = { 0,-1,-2 };
+	Point points2[3] = { point2_1, point2_2, point2_3 };
+	figures.add(figure.create_sphere(points1));
+	figures.add(figure.create_cylinder(points2));
+	figures.insert_figure(figure.create_parallelepiped(points1),0);
+	int x = 0;
+	if (*figures.get_figure_by_index(0) == *figure.create_parallelepiped(points1)) x++;
+	EXPECT_EQ(x, 1);
+}
+	
+//3
+TEST(StorageTests, IndexOfMaxVolume)
+{
+	Storage figures;
+	Figure figure;
+	Point point1_1 = { 0,0,0 };
+	Point point1_2 = { 0,0,13 };
+	Point points1[2] = { point1_1, point1_2 };
+	Point point2_1 = { 9,-1,2 };
+	Point point2_2 = { 0,-1,2 };
+	Point point2_3 = { 0,-1,-2 };
+	Point points2[3] = { point2_1, point2_2, point2_3 };
+	Point point3_1 = { 2,4,0 };
+	Point point3_2 = { 5,1,4 };
+	Point points3[2] = {point3_1, point3_2};
+	figures.add(figure.create_sphere(points1));
+	figures.add(figure.create_cylinder(points2));
+	figures.add(figure.create_parallelepiped(points3));
+	Figure result = figures.IndexOfMaxVolume();
+	TypeFigure t = result.getTypeFigure();
 	EXPECT_EQ(t, Sphere);
 }
 
-//3
-TEST(StorageTests, InsertTest)
-{
-	Storage _figures;
-	Figure figure_1 = Figure::create_sphere(0,0,0,0,0,13);
-	Figure figure_2 = Figure::create_cylinder(0,-1,2,9,-1,2,0,-1,-2);
-	Figure figure_3 = Figure::create_parallelepiped(1,2,-4,3,0,2);
-	_figures.add(figure_1);
-	_figures.add(figure_2);
-	_figures.insert_figure(figure_3,1);
-	TypeFigure t = _figures[1].getTypeFigure();
-	EXPECT_EQ(t,Parallelepiped);
-}
-	
 //4
-TEST(StorageTests,IndexOfMaxVolume)
+TEST(StorageTests, InstallTest)
 {
-	Storage _figures;
-	_figures.add(Figure::create_sphere(0,-1,2,4,-1,2));
-	_figures.add(Figure::create_cylinder(5,4,0,5,4,6,5,1,6));
-	_figures.add(Figure::create_parallelepiped(1,2,-4,3,0,2));
-	EXPECT_EQ(IndexOfMaxVolume(_figures),0);
+	Storage figures;
+	Figure figure;
+	Point point1_1 = { 0,0,0 };
+	Point point1_2 = { 0,0,13 };
+	Point points1[2] = { point1_1, point1_2 };
+	Point point2_1 = { 9,-1,2 };
+	Point point2_2 = { 0,-1,2 };
+	Point point2_3 = { 0,-1,-2 };
+	Point points2[3] = { point2_1, point2_2, point2_3 };
+	figures.add(figure.create_sphere(points1));
+	figures.add(figure.create_cylinder(points2));
+	figures.install_figure(figure.create_parallelepiped(points1), 0);
+	int x = 0;
+	if (*figures.get_figure_by_index(0) == *figure.create_parallelepiped(points1)) x++;
+	EXPECT_EQ(x, 1);
+}
+
+//5
+TEST(StorageTests, GetSize)
+{
+	Storage figures;
+	Figure figure;
+	Point point1_1 = { 0,0,0 };
+	Point point1_2 = { 0,0,13 };
+	Point points1[2] = { point1_1, point1_2 };
+	Point point2_1 = { 9,-1,2 };
+	Point point2_2 = { 0,-1,2 };
+	Point point2_3 = { 0,-1,-2 };
+	Point points2[3] = { point2_1, point2_2, point2_3 };
+	Point point3_1 = { 2,4,0 };
+	Point point3_2 = { 5,1,4 };
+	Point points3[2] = { point3_1, point3_2 };
+	figures.add(figure.create_sphere(points1));
+	figures.add(figure.create_cylinder(points2));
+	figures.add(figure.create_parallelepiped(points3));
+	int x = figures.get_size();
+	EXPECT_EQ(x, 3);
 }

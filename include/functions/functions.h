@@ -1,68 +1,82 @@
 #pragma once
 
+#include<iostream>
+
 namespace figure {
-	
-	enum TypeFigure {
-		Sphere,
-		Cylinder,
-		Parallelepiped
-	};
-	
-	class Figure {
-	private:
-		TypeFigure _type;
-         double _x1, _y1, _z1;
-		 double _x3, _y3, _z3;
-		 double _x2, _y2, _z2;
-		 Figure(TypeFigure type, double x1, double y1, double z1, double x2, double y2, double z2);
-		 Figure(TypeFigure type, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3);
-		
-	public:
-		Figure();
-		static Figure create_sphere(double x1, double y1, double z1, double x2, double y2, double z2);
-		static Figure create_cylinder(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3);
-		static Figure create_parallelepiped(double x1, double y1, double z1, double x2, double y2, double z2);
-		TypeFigure getTypeFigure() const;
-		double get_x1() const;
-		double get_x3() const;
-		double get_x2() const;
-		double get_y1() const;
-		double get_y3() const;
-		double get_y2() const;
-		double get_z1() const;
-		double get_z3() const;
-		double get_z2() const;
 
-	    double compute_area();
-		double compute_volume();
+    enum TypeFigure {
+        Sphere,
+        Cylinder,
+        Parallelepiped
+    };
 
-		double calc_of_area_sphere();
-		double calc_of_area_cylinder();
-		double calc_of_area_parallelepiped();
-		double calc_of_volume_sphere();
-		double calc_of_volume_cylinder();
-		double calc_of_volume_parallelepiped();
+    struct Point {
+        double x;
+        double y;
+        double z;
+    };
 
-	};
-	
-  
-     class Storage{
-		 
-		public:
-			static const int CAPACITY = 10;
-		     Storage();
-			 Storage(Figure figures[], int size);
-			 int size() const;
-	         Figure operator[](int index) const;
-			 void add(const Figure f);
-			 void del_item(int index);
-			 void insert_figure(Figure figure1, int index);
-			 void remove(int index);
-	 private:
-		 Figure _figures[CAPACITY];
-		 int _size;
+    class Figure {
+    private:
+        TypeFigure _type;
+        Point _point[3];
+        
 
-	 };
+    public:
+        Figure();
+        Figure(TypeFigure type, Point* points);
 
-	 int IndexOfMaxVolume(const Storage& figures);
+        TypeFigure getTypeFigure() const;
+        double get_x(int i);
+        double get_y(int i);
+        double get_z(int i);
+        bool chek_points(); 
+        Figure* create(TypeFigure type, Point* points);
+        Figure* create_sphere(Point* s_points);
+        Figure* create_cylinder(Point* c_points);
+        Figure* create_parallelepiped(Point* p_points);
+        bool operator==(const Figure figure1);
+        void print();
+        friend std::ostream& operator<< (std::ostream& out, Figure& point);
+        Figure* clone();
+        double compute_area();
+        double compute_volume();
+
+    };
+    inline std::ostream& operator<< (std::ostream& out, Figure& point) {
+        point.print();
+        return out;
+    }
+
+    class Storage {
+
+    public:
+        Storage();
+        Storage(const Storage& other);
+        int get_size() const;
+        Figure* operator[](int index) const;
+        Storage& operator=(Storage& rhs);
+        Figure* get_figure_by_index(int i);
+        void add(Figure* f);
+        void del_item(int index);
+        void insert_figure(Figure* figure, int index);
+        void install_figure(Figure* figure1, int index);
+        void remove(int index);
+        void print();
+        Figure* get_index(int index);
+        void swap(Storage& other);
+        friend std::ostream& operator<< (std::ostream& out, Storage& point);
+
+        ~Storage();
+
+        Figure IndexOfMaxVolume();
+    private:
+        Figure** _figures;
+        int _size = 0;
+
+    };
+    inline std::ostream& operator<< (std::ostream& out, Storage& point) {
+        point.print();
+        return out;
+    }
 }
