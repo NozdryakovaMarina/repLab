@@ -85,6 +85,13 @@ void Storage::insert_figure(Figure* figure, int index)
     _size++;
 }
 
+Figure* Storage::get_index(int index) {
+    if (index < 0 || _size <= index) {
+        throw 0;
+    }
+    return _figures[index];
+}
+
 void Storage::install_figure(Figure* figure, int index)
 {
     if (index < 0 || index > _size) {
@@ -118,6 +125,36 @@ void Storage::del_item(int index)
     delete[] _figures;
     _figures = new_figure;
     _size--;
+}
+
+void Storage::print() {
+    for (int i = 0; i < _size; ++i) {
+        cout << i << ") ";
+        switch (_figures[i]->getTypeFigure()) {
+        case 0: {
+            cout << "Sphere" << " ";
+            for (int j = 0; j < 2; ++j) {
+                cout << _figures[i]->get_x(j) << " " << _figures[i]->get_y(j) << " " << _figures[i]->get_z(j) << " ";
+            }
+            break;
+        }
+        case 1: {
+            cout << "Cylinder" << " ";
+            for (int j = 0; j < 3; ++j) {
+                cout << _figures[i]->get_x(j) << " " << _figures[i]->get_y(j) << " " << _figures[i]->get_z(j) << " ";
+            }
+            break;
+        }
+        case 2: {
+            cout << "Parallelepiped" << " ";
+            for (int j = 0; j < 2; ++j) {
+                cout << _figures[i]->get_x(j) << " " << _figures[i]->get_y(j) << " " << _figures[i]->get_z(j) << " ";
+            }
+            break;
+        }
+        }
+        cout << "\n";
+    }
 }
 
 Figure Storage::IndexOfMaxVolume()

@@ -1,14 +1,14 @@
 #include <functions/functions.h>
 
-#include <cstdlid>
+#include <cstdlib>
 #include <iostream>
-#include <licale.h>
+#include <locale.h>
 
 using namespace figure;
 using namespace std;
 
 int main() {
-	set_locale(LC_ALL, "rus");
+	setlocale(LC_ALL, "RUS");
 	int choise = 8;
 	Storage figures;
 	do {
@@ -23,8 +23,8 @@ int main() {
 		cout << " | 6 - поиск в наборе первой фигуры с максимальным объемом          |" << endl;
 		cout << " | 7 - вывести список фигур                                         |" << endl;
 		cout << " | 8 - выйти из системы                                             |" << endl;
-		cout << " -------------------------------------------------------------------"
-			cout << "¬ыберите, что вы хотите сделать: ";
+		cout << " -------------------------------------------------------------------" << endl;
+	    cout << "¬ыберите, что вы хотите сделать: ";
 		cin >> choise;
 		cout << "\n";
 		switch (choise)
@@ -33,7 +33,7 @@ int main() {
 			int _index;
 			int _type;
 			Figure _figure;
-			POint _points[3];
+			Point _points[3];
 			int d = 0;
 			cout << "”кажите индекс фигуры, по которому хотите вставить фигуру: ";
 			cin >> _index;
@@ -200,6 +200,6 @@ int main() {
 			}
 		}break;
 		}
-	} while (choice != 8);
+	} while (choise != 8);
 	return 0;
 }
