@@ -56,7 +56,6 @@ namespace figure {
         int get_size() const;
         Figure* operator[](int index) const;
         Storage& operator=(Storage& rhs);
-        Figure* get_figure_by_index(int i);
         void add(Figure* f);
         void del_item(int index);
         void insert_figure(Figure* figure, int index);

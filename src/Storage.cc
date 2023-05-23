@@ -18,7 +18,7 @@ Storage::~Storage() {
     for (int i = 0; i < _size; i++) {
         delete _figures[i];
     }
-    delete[] _figures;;
+    delete[] _figures;
 }
 
 void Storage::swap(Storage& other) {
@@ -26,10 +26,10 @@ void Storage::swap(Storage& other) {
     std::swap(_figures, other._figures);
 }
 
-Storage::Storage(const Storage& other) :
-    _figures(new Figure* [other._size]),
-    _size(other._size)
+Storage::Storage(const Storage& other)
 {
+    _figures = new Figure * [other._size];
+    _size = (other._size);
     for (int i = 0; i < _size; ++i) {
         _figures[i] = other[i]->clone();
     }
@@ -47,13 +47,6 @@ Figure* Storage::operator[](const int index) const
     if (index < 0 || _size <= index) {
         throw out_of_range("[FigureList::operator[]] Index is out of range. ");
     }
-    return _figures[index];
-}
-
-Figure* Storage::get_figure_by_index(int index)
-{
-    if (index < 0 || _size <= index)
-        throw 0;
     return _figures[index];
 }
 
@@ -166,15 +159,5 @@ Figure Storage::IndexOfMaxVolume()
         if (max_figure.compute_volume() < (*_figures[i]).compute_volume())
             max_figure = *_figures[i];
     }
-   /*int max_index = 0;
-    double maxVolume = _figures[0]->compute_volume();
-    for (int i = 1; i < _size; i++) {
-        double volume = _figures[i]->compute_volume();
-        if (volume > maxVolume) {
-            max_index = i;
-            maxVolume = volume;
-        }
-    }*/
-   
     return max_figure;
 }

@@ -141,7 +141,7 @@ TEST(FigureTests, FigureCylinderPi)
 	Point point3 = { 5,1,6 };
 	Point point_figure[3] = { point1, point2, point3 };
 	Figure f(Cylinder, point_figure);
-	ASSERT_NO_THROW(f.compute_area(), 169.56, EPSILON);
+	ASSERT_NO_THROW(f.compute_area());
 }
 
 //15
@@ -163,7 +163,7 @@ TEST(FigureTests, FigureCylinderPiz)
 	Point point3 = { 5,1,6 };
 	Point point_figure[3] = { point1, point2, point3 };
 	Figure f(Cylinder, point_figure);
-	ASSERT_NO_THROW(f.compute_volume(), 169.56, EPSILON);
+	ASSERT_NO_THROW(f.compute_volume());
 }
 
 //17

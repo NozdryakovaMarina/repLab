@@ -16,7 +16,7 @@ int main() {
 		cout << " |                              Меню                                |" << endl;
 		cout << " ___________________________________________________________________" << endl;
 		cout << " | 1 - добавить фигуру по индексу                                   |" << endl;
-		cout << " | 2 - заменить фигуру по индексу                                   |" << endl;
+		cout << " | 2 - установка фигуры по индексу                                  |" << endl;
 		cout << " | 3 - удалить фигуру по индексу                                    |" << endl;
 		cout << " | 4 - рассчитать площадь                                           |" << endl;
 		cout << " | 5 - рассчитать объем                                             |" << endl;
@@ -95,6 +95,102 @@ int main() {
 					d = 1;
 				}break;
 				case 3: {
+					cout << "Введите координаты параллелепипеда через пробел: ";
+					for (int i = 0; i < 2; ++i)
+					{
+						cin >> _points[i].x;
+						cin >> _points[i].y;
+						cin >> _points[i].z;
+					}
+					while (!(*_figure.create_parallelepiped(_points)).chek_points())
+					{
+						cout << "Неверно введены координатыю Повторите попытку: ";
+						for (int i = 0; i < 2; ++i)
+						{
+							cin >> _points[i].x;
+							cin >> _points[i].y;
+							cin >> _points[i].z;
+						}
+					}
+					cout << "\n";
+					const auto ptr = _figure.create_parallelepiped(_points);
+					figures.insert_figure(ptr, _index);
+					d = 1;
+				}break;
+				}
+			} while (d == 0);
+		}break;
+		case 2: {
+			int _index;
+			int _type;
+			Figure _figure;
+			Point _points[3];
+			int d = 0;
+			cout << "Укажите индекс фигуры, по которому хотите установить фигуру: ";
+			cin >> _index;
+			while (_index < 0 || _index > figures.get_size())
+			{
+				cout << "Неверно введен индекс. Повторите попытку: ";
+				cin >> _index;
+			}
+			cout << "\n";
+			do
+			{
+				cout << "Введите фигуру, которую хотите установить: \n1)Сфера  \n2)Цилиндр  \n3)Параллелепипед \nВаш выбор: ";
+				cin >> _type;
+				cout << "\n";
+				switch (_type)
+				{
+				case 1:
+				{
+					cout << "Введите координаты сферы через пробел: ";
+					for (int i = 0; i < 2; ++i)
+					{
+						cin >> _points[i].x;
+						cin >> _points[i].y;
+						cin >> _points[i].z;
+					}
+					while (!(*_figure.create_sphere(_points)).chek_points())
+					{
+						cout << "Неверное введены координаты. Повторите попытку: ";
+						for (int i = 0; i < 2; ++i)
+						{
+							cin >> _points[i].x;
+							cin >> _points[i].y;
+							cin >> _points[i].z;
+						}
+					}
+					cout << "\n";
+					const auto ptr = _figure.create_sphere(_points);
+					figures.install_figure(ptr, _index);
+					d = 1;
+				}break;
+				case 2:
+				{
+					cout << ": ";
+					for (int i = 0; i < 3; ++i)
+					{
+						cin >> _points[i].x;
+						cin >> _points[i].y;
+						_points[i].z;
+					}
+					while (!(*_figure.create_cylinder(_points)).chek_points())
+					{
+						cout << "Неверно введены координаты. Повторите попытку: ";
+						for (int i = 0; i < 3; ++i)
+						{
+							cin >> _points[i].x;
+							cin >> _points[i].y;
+							cin >>_points[i].z;
+						}
+					}
+					cout << "\n";
+					const auto ptr = _figure.create_cylinder(_points);
+					figures.install_figure(ptr, _index);
+					d = 1;
+				}break;
+				case 3:
+				{
 					cout << "Введите координаты параллелепипеда через пробел: ";
 					for (int i = 0; i < 2; ++i)
 					{

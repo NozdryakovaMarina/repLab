@@ -27,7 +27,7 @@ TEST(StorageTests, del_item)
 	figures.add(figure.create_sphere(points2));
 	figures.del_item(0);
 	int x = 0;
-	if (*figures.get_figure_by_index(0) == *figure.create_sphere(points2)) ++x;
+	if (*figures.get_index(0) == *figure.create_sphere(points2)) ++x;
 	EXPECT_EQ(x, 1);
 }
 
@@ -47,7 +47,7 @@ TEST(StorageTests, InsertTest)
 	figures.add(figure.create_cylinder(points2));
 	figures.insert_figure(figure.create_parallelepiped(points1),0);
 	int x = 0;
-	if (*figures.get_figure_by_index(0) == *figure.create_parallelepiped(points1)) x++;
+	if (*figures.get_index(0) == *figure.create_parallelepiped(points1)) x++;
 	EXPECT_EQ(x, 1);
 }
 	
@@ -90,7 +90,7 @@ TEST(StorageTests, InstallTest)
 	figures.add(figure.create_cylinder(points2));
 	figures.install_figure(figure.create_parallelepiped(points1), 0);
 	int x = 0;
-	if (*figures.get_figure_by_index(0) == *figure.create_parallelepiped(points1)) x++;
+	if (*figures.get_index(0) == *figure.create_parallelepiped(points1)) x++;
 	EXPECT_EQ(x, 1);
 }
 
